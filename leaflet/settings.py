@@ -1,3 +1,8 @@
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
 # Django settings for leaflet project.
 import os
 
@@ -78,9 +83,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '7+4xb!49u@pt@d82f75#)&amp;9@ifzv#-%98f@hi$-zvzh_xxlo8i'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
