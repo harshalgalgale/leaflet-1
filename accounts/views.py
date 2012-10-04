@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from accounts.forms import RegistrationForm, LoginForm
+from django.core.urlresolvers import reverse
 
 def registration_request(request):
 	if request.user.is_authenticated():
@@ -48,4 +49,7 @@ def login_request(request):
 
 def logout_request(request):
 	logout(request)
-	return HttpResponseRedirect('/login/')
+	return redirect(reverse('index'))
+
+def profile(request, user_id):
+	return render_to_response('profile.html', context_instance=RequestContext(request))

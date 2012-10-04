@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}{{ user }}{% endblock %}
+
+{% block primary %}
+	<div class="one-third column">
+		<h3>{{ user }}</h3>
+		<p>{{ user.email }}</p>
+		<hr>
+		<ul class="circle">
+			<li>DOB:</li>
+			<li>Major:</li>
+			<li>Favorite Subject:</li>
+			<li>Number of <a href="#">Leaves</a> created:</li>
+			<li>Votes Casted: </li>
+		</ul>
+	</div>
+	<div class="one-third column">
+	</div>
+	<div class="one-third column">
+	</div>
+{% endblock %}

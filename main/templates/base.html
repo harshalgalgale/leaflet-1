@@ -25,10 +25,18 @@
 			<h1 class="remove-bottom" style="margin-top: 40px;"><a href="{% url index %}">Leaflet</a></h1>
 			<div class="nav">
 			<ul class="nav-links">
+				{% if user.is_authenticated %}
+				<li><a href="{% url profile user.id %}">Profile</a></li>
+				<li><a href="{% url create user.id %}">Create</a></li>
+				<li><a href="#">Explore</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="{% url logout %}">Log Out</a></li>
+				{% else %}
 				<li><a href="{% url login %}">Login</a></li>
 				<li><a href="{% url registration %}">Sign Up</a></li>
 				<li><a href="#">Explore</a></li>
 				<li><a href="#">About</a></li>
+				{% endif %}
 			</ul>
 			</div>
 			<hr/>
