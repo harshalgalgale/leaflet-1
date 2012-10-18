@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
+{% load url from future %}
 
 {% block pagetitle %}Login{% endblock %}
 
-{% block primary %}
-		  	
+{% block primary %}	  	
 		  	<div class="one-third column">
-		    &nbsp;
+		  	&nbsp;
 		  	</div>
 		  	<div class="one-third column">
-		  	<form action="" method="post">
-		  	<center>{% csrf_token %}
-		  	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
-			  	{% if form.username.errors %}<p>{{ form.username.errors }}</p>{% endif %}
-				<p>{% if form.username.errors %}<label form="username" class="alert alert-error">{% endif %}Username:</label></p>
-				{{ form.username }}	
-				{% if form.password.errors %}<p>{{ form.password.errors }}</p>{% endif %}
-				<p><label form="password" {% if form.password.errors %} class="alert alert-error" {% endif %}>Password:</label></p>
+		  	<center>
+		    {% if messages %}
+			<ul class="messages">
+			    {% for message in messages %}
+			    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			    {% endfor %}
+			</ul>
+			{% endif %}
+		  	<form method="post" action="">{% csrf_token %}
+		  		<p>{{ form.username.label_tag}}</p>
+				<p>{{ form.username }}</p>
+				<p>{{ form.password.label_tag}}</p>
 				<p>{{ form.password }}</p>
-				<p><button type="submit" class="button" alt="register">Login</button></p>
+				<p><button type="submit" class="button" value="login">Login</button></p>
 			</center>
 			</form>
 		  	</div>

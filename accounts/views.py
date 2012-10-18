@@ -1,16 +1,31 @@
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
-from django.shortcuts import render_to_response, redirect
+from accounts.forms import UserProfileForm
+from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
+from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from accounts.forms import RegistrationForm, LoginForm
 from django.core.urlresolvers import reverse
+from django.contrib import messages
+from PIL import Image as PImage
+from os.path import join as pjoin
+
+# Messages
+INFO = 20
+SUCCESS = 25
+ERROR = 40
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ['user', 'leaves', 'votes']
 
 def registration_request(request):
 	if request.user.is_authenticated():
-		return HttpResponseRedirect('/')
+		return HttpResponseRedirect('profile.html')
 	if request.method == 'POST':
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
@@ -20,11 +35,15 @@ def registration_request(request):
 			user.save()
 			return HttpResponseRedirect('/')
 		else:
-			return render_to_response('register.html', {'form':form}, context_instance=RequestContext(request))
+			return render(request, 'register.html', {
+                'form':form
+            })
 	else:
 	    # User is not submitting form, show them blank registration
 	    form = RegistrationForm()
-	    return render_to_response('register.html', {'form':form}, context_instance=RequestContext(request))
+	    return render(request, 'register.html', {
+            'form':form
+        })
 
 def login_request(request):
     if request.user.is_authenticated():
@@ -37,19 +56,49 @@ def login_request(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return redirect(reverse('index'))
             else:
-                return render_to_response('login.html', {'form':form}, context_instance=RequestContext(request))
+            	# Invalid User or Pass
+            	messages.add_message(request, ERROR, 'You have provided invalid login information.')
+                return render(request, 'login.html', {
+                    'form':form
+                })
         else:
-            return render_to_response('login.html', {'form':form}, context_instance=RequestContext(request))
+        	# Blank
+        	messages.add_message(request, ERROR, 'Please enter correct login information.')
+        	return render(request, 'login.html', {
+                'form':form
+            })
     else:
-        # user is not submitting form, show login form
-        form = LoginForm()
-        return render_to_response('login.html', {'form':form}, context_instance=RequestContext(request))
+        # No POST, Show Form
+        messages.add_message(request, INFO, 'Please login below.')
+        return render(request, 'login.html', {
+            'form':LoginForm(),
+        })
 
 def logout_request(request):
 	logout(request)
 	return redirect(reverse('index'))
 
-def profile(request, user_id):
-	return render_to_response('profile.html', context_instance=RequestContext(request))
+@login_required
+def profile_detail(request):
+    return render(request, 'profile.html')
+
+@login_required
+def profile_update(request):
+
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            profile = form.save()
+            messages.add_message(request, SUCCESS, 'Your profile has been updated successfully.')
+        else:
+            messages.add_message(request, ERROR, 'Something went wrong.')
+    else:
+        form = UserProfileForm(instance=profile)
+
+    return render(request, 'profile_update.html', {
+        'userprofile': form,
+    })

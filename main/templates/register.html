@@ -3,7 +3,39 @@
 {% block pagetitle %}Sign Up{% endblock %}
 
 {% block primary %}
-        <div class="one-third column">
-          register here o_0
-        </div>
+		  	<div class="one-third column">
+		    &nbsp;
+		  	</div>
+		  	<div class="one-third column">
+
+		  	<form action="" method="post">
+		  	{% csrf_token %}
+		  	<center>
+		  	{% if form.errors %}<p>Please correct the following fields:</p>{% endif %}
+
+			  	{% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
+				<p><label form="username" {% if form.username.errors %} class="error" {% endif %}>Username:</label></p>
+				<p>{{ form.username }}</p>
+
+				{% if form.email.errors %}<p class="error">{{ form.email.errors }}</p>{% endif %}
+				<p><label form="email" {% if form.email.errors %} class="error" {% endif %}>Email:</label></p>
+				<p>{{ form.email }}</p>
+
+				{% if form.password.errors %}<p class="error">{{ form.password.errors }}</p>{% endif %}
+				<p><label form="password" {% if form.password.errors %} class="error" {% endif %}>Password:</label></p>
+				<p>{{ form.password }}</p>
+
+				{% if form.password1.errors %}<p class="error">{{ form.password1.errors }}</p>{% endif %}
+				<p><label form="password1" {% if form.password1.errors %} class="error" {% endif %}>Verify Password:</label></p>
+				<p>{{ form.password1 }}</p>
+
+				<p><button type="submit" class="btn" alt="register">Submit</button></p>
+				</center>
+		  	</form>
+
+
+		  	</div>
+		  	<div class="one-third column">
+		  	&nbsp;
+		  	</div>
 {% endblock %}

@@ -3,20 +3,23 @@
 {% block pagetitle %}{{ user }}{% endblock %}
 
 {% block primary %}
+{% if user.is_authenticated %}
+	<div class="one-third column">
+		<center><img src="http://placehold.it/300x300"></center>
+	</div>
 	<div class="one-third column">
 		<h3>{{ user }}</h3>
-		<p>{{ user.email }}</p>
+		<p>{{ user.email }} [<a href="{% url profile_update %}">Edit Profile</a>]</p>
 		<hr>
 		<ul class="circle">
-			<li>DOB:</li>
-			<li>Major:</li>
-			<li>Favorite Subject:</li>
-			<li>Number of <a href="#">Leaves</a> created:</li>
-			<li>Votes Casted: </li>
+			<li>DOB: <a font color="#000">{{ user.userprofile.birthday }}</a></li>
+			<li>School: <a font color="#000">{{ user.userprofile.school }}</a></li>
+			<li>Major: <a font color="#000">{{ user.userprofile.major }}</a></li>
+			<li>Favorite Subject: <a font color="#000">{{ user.userprofile.fav_subj }}</a></li>
+			<li>Number of <a href="#">Leaves</a> created: <a font color="#000">{{ user.userprofile.leaves }}</a></li>
+			<li>Number of votes: <a font color="#000">{{ user.userprofile.votes }}</a></li>
 		</ul>
 	</div>
-	<div class="one-third column">
-	</div>
-	<div class="one-third column">
-	</div>
+
+{% endif %}
 {% endblock %}

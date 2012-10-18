@@ -269,7 +269,7 @@
 /* #Leaflet Stuff
 ================================================== */
 	.nav {
-		margin-top: -25px;
+		margin-top: -20px;
 		float: right; }
 	.nav ul {
 		margin: 0;
@@ -277,7 +277,7 @@
 		list-style-type: none; }
 	.nav ul li {
 		display: inline; 
-		padding: .2em .90em; }
+		padding: .2em .60em; }
 	.nav .divider-vertical {
 		height: 40px;
 	    margin: 1px auto;
@@ -285,5 +285,4 @@
 	    padding-right: 10px;
    	    border-right: 0px solid #fff;
 		border-left: 1px solid #999; }
-
 

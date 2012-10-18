@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}{{ user }}{% endblock %}
+
+{% block primary %}
+{% if user.is_authenticated %}
+	<div class="one-third column">
+		<center><img src="http://placehold.it/300x300">[<a href="#">Change Profile Picture</a>]</center>
+	</div>
+	<div class="one-third column">
+		<h3>Profile Settings</h3>
+		<hr>
+		<form method="post" action="">{% csrf_token %}
+		<ul>
+			<li>{{ userprofile.birthday.label_tag }} {{ userprofile.birthday }}</li>
+			<li>{{ userprofile.major.label_tag }} {{ userprofile.major }}</li>
+			<li>{{ userprofile.school.label_tag }} {{ userprofile.school }}</li>
+			<li>{{ userprofile.fav_subj.label_tag }} {{ userprofile.fav_subj }}</li>
+		</ul>
+		<p><button type="submit" class="button" value="login">Save Changes</button></p>
+	    </form> 
+	</div>
+	<div class="one-third column">
+		{% if messages %}
+		<ul class="messages">
+		    {% for message in messages %}
+		    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><p>{{ message }}</p></li>
+		    {% endfor %}
+		</ul>
+		{% endif %}	
+	</div>
+{% endif %}
+{% endblock %}

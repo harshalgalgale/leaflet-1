@@ -6,14 +6,22 @@
 <head>
 	<meta charset="utf-8">
 	<title>Leaflet - {%block pagetitle %}{% endblock %}</title>
-	<meta name="description" content="">
+	<meta name="description" content="notes, collaboration">
 	<meta name="author" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/base.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/skeleton.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/layout.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script>
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
+    </script>
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -22,12 +30,12 @@
 
 	<div class="container">
 		<div class="sixteen columns">
-			<h1 class="remove-bottom" style="margin-top: 40px;"><a href="{% url index %}">Leaflet</a></h1>
+			<h1 class="remove-bottom" style="margin-top: 20px;"><a href="{% url index %}">Leaflet</a></h1><br>
 			<div class="nav">
 			<ul class="nav-links">
 				{% if user.is_authenticated %}
-				<li><a href="{% url profile user.id %}">Profile</a></li>
-				<li><a href="{% url create user.id %}">Create</a></li>
+				<li><a href="{% url profile_detail %}">Profile</a></li>
+				<li><a href="{% url create %}">Create</a></li>
 				<li><a href="#">Explore</a></li>
 				<li><a href="#">About</a></li>
 				<li><a href="{% url logout %}">Log Out</a></li>

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.forms.widgets import TextInput, PasswordInput
+from accounts.models import UserProfile
 
 class RegistrationForm(forms.Form):
 	username  = forms.CharField()
@@ -27,3 +28,11 @@ class RegistrationForm(forms.Form):
 class LoginForm(forms.Form):
 	username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'username'}))
 	password = forms.CharField(widget=forms.PasswordInput(render_value=False, attrs={'placeholder':'password'}))
+
+class UserProfileForm(ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ('birthday','major','school','fav_subj')
+		widgets = {
+		        'birthday':TextInput(attrs={'id':'datepicker'}),
+		}

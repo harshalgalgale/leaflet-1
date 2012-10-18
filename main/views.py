@@ -1,11 +1,12 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-	return render_to_response('index.html', context_instance=RequestContext(request))
+	return render(request, 'index.html')
 
 @login_required
-def create(request, user_id):
-	return render_to_response('create.html', context_instance=RequestContext(request))
+def create(request):
+	return render(request, 'create.html')
