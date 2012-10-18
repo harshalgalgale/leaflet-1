@@ -286,3 +286,19 @@
    	    border-right: 0px solid #fff;
 		border-left: 1px solid #999; }
 
+/* #Editor
+================================================== */
+	#editor {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0; }
+	.editor_wrapper {
+		height: 275px;
+		position: relative;
+		border: 1px solid #DDD;
+		border-radius: 4px;
+		border-bottom-right-radius: 0px;
+		margin-top: 5px;
+	}

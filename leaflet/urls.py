@@ -10,6 +10,8 @@ urlpatterns = patterns('main.views',
     url(r'^create/$','create', name='create'),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
+    # socket.io
+    url("", include('django_socketio.urls')),
 )
 
 # Auth and Accounts

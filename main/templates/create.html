@@ -3,13 +3,15 @@
 {% block pagetitle %}Create{% endblock %}
 
 {% block primary %}
-	<div class="one-third column">
-		<h1 align="center">CR</h1>
-	</div>
-	<div class="one-third column">
-		<h1 align="center">EA</h1>
-	</div>
-	<div class="one-third column">
-		<h1 align="center">TE</h1>
-	</div>
+    <div class="sixteen columns">
+      <div class="editor_wrapper">
+        <div id="editor">Collaboration starts here!</div>
+      </div>
+    </div>
+
+<script src="http://ajaxorg.github.com/ace/build/src/ace.js"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/eclipse");
+</script>
 {% endblock %}

@@ -10,8 +10,6 @@ from django.contrib.auth import authenticate, login, logout
 from accounts.forms import RegistrationForm, LoginForm
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-from PIL import Image as PImage
-from os.path import join as pjoin
 
 # Messages
 INFO = 20
@@ -24,30 +22,30 @@ class ProfileForm(ModelForm):
         exclude = ['user', 'leaves', 'votes']
 
 def registration_request(request):
-	if request.user.is_authenticated():
-		return HttpResponseRedirect('profile.html')
-	if request.method == 'POST':
-		form = RegistrationForm(request.POST)
-		if form.is_valid():
-			user = User.objects.create_user(username=form.cleaned_data['username'], 
+    if request.user.is_authenticated():
+        return redirect(reverse('profile'))
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(username=form.cleaned_data['username'], 
                                             email=form.cleaned_data['email'], 
                                             password=form.cleaned_data['password'])
-			user.save()
-			return HttpResponseRedirect('/')
-		else:
-			return render(request, 'register.html', {
+            user.save()
+            return redirect(reverse('index'))
+        else:
+            return render(request, 'register.html', {
                 'form':form
             })
-	else:
-	    # User is not submitting form, show them blank registration
-	    form = RegistrationForm()
-	    return render(request, 'register.html', {
+    else:
+        # User is not submitting form, show them blank registration
+        form = RegistrationForm()
+        return render(request, 'register.html', {
             'form':form
         })
 
 def login_request(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+        return reverse(index)
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -56,17 +54,17 @@ def login_request(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(reverse('index'))
+                return redirect(reverse('create'))
             else:
-            	# Invalid User or Pass
-            	messages.add_message(request, ERROR, 'You have provided invalid login information.')
+                # Invalid User or Pass
+                messages.add_message(request, ERROR, 'You have provided invalid login information.')
                 return render(request, 'login.html', {
                     'form':form
                 })
         else:
-        	# Blank
-        	messages.add_message(request, ERROR, 'Please enter correct login information.')
-        	return render(request, 'login.html', {
+            # Blank
+            messages.add_message(request, ERROR, 'Please enter correct login information.')
+            return render(request, 'login.html', {
                 'form':form
             })
     else:
@@ -77,8 +75,8 @@ def login_request(request):
         })
 
 def logout_request(request):
-	logout(request)
-	return redirect(reverse('index'))
+    logout(request)
+    return redirect(reverse('index'))
 
 @login_required
 def profile_detail(request):
